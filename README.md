@@ -17,7 +17,7 @@ Codex reads `.agents/skills/` directly, so no symlink is created for it.
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 22.14+
 - Git (optional — used to resolve the project root when run inside a repo)
 
 ## Local setup
