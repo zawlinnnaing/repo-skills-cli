@@ -11,6 +11,9 @@
   },
   "homepage": "https://github.com/zawlinnnaing/repo-skills-cli#readme",
   "type": "module",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "bin": {
     "repo-skills": "./dist/index.js"
   },
