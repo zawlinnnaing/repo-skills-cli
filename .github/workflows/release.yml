@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.14
           cache: npm
 
       - run: npm ci
@@ -42,8 +42,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
+          node-version: 22.14
 
       - name: Ensure npm supports trusted publishing
         run: npm install -g npm@^11.5.1
