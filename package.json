@@ -1,0 +1,39 @@
+{
+  "name": "repo-skills",
+  "version": "0.1.0",
+  "description": "Scaffold repo skills with canonical .agents/skills/ and provider symlinks",
+  "type": "module",
+  "bin": {
+    "repo-skills": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "skills",
+    "cursor",
+    "claude",
+    "codex",
+    "windsurf",
+    "cli"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.10.1",
+    "commander": "^13.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
