@@ -181,7 +181,7 @@ describe("createSkill", () => {
     expect(await isCorrectSymlink(windsurfLink, canonical)).toBe(true);
   });
 
-  it("uses git root when inside a git repo", async () => {
+  it("uses git root when cwd is implicit inside a git repo", async () => {
     const cwd = await makeTempDir();
     execSync("git init", { cwd, stdio: "pipe" });
 
@@ -190,15 +190,41 @@ describe("createSkill", () => {
       fs.mkdir(subdir, { recursive: true }),
     );
 
+    const originalCwd = process.cwd();
+    process.chdir(subdir);
+    try {
+      const result = await createSkill({
+        skillName: "my-skill",
+        agents: ["cursor"],
+        interactive: false,
+      });
+
+      expect(result.canonicalPath).toBe(
+        path.join(realpathSync(cwd), ".agents", "skills", "my-skill"),
+      );
+    } finally {
+      process.chdir(originalCwd);
+    }
+  });
+
+  it("uses explicit cwd as project root even inside a git repo", async () => {
+    const cwd = await makeTempDir();
+    execSync("git init", { cwd, stdio: "pipe" });
+
+    const examples = path.join(cwd, "examples");
+    await import("node:fs/promises").then((fs) =>
+      fs.mkdir(examples, { recursive: true }),
+    );
+
     const result = await createSkill({
       skillName: "my-skill",
       agents: ["cursor"],
       interactive: false,
-      cwd: subdir,
+      cwd: examples,
     });
 
     expect(result.canonicalPath).toBe(
-      path.join(realpathSync(cwd), ".agents", "skills", "my-skill"),
+      path.join(realpathSync(examples), ".agents", "skills", "my-skill"),
     );
   });
 });

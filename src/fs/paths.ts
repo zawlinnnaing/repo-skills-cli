@@ -17,6 +17,15 @@ export function resolveProjectRoot(cwd: string): string {
   }
 }
 
+export function resolveExplicitProjectRoot(cwd: string): string {
+  const resolved = path.resolve(cwd);
+  try {
+    return realpathSync(resolved);
+  } catch {
+    return resolved;
+  }
+}
+
 export function getCanonicalSkillPath(projectRoot: string, skillName: string): string {
   return path.join(projectRoot, CANONICAL_SKILLS_DIR, skillName);
 }

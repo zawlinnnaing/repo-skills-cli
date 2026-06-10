@@ -3,7 +3,10 @@ import {
   createSkill,
   formatCreateResult,
 } from "./create-skill.js";
-import { resolveProjectRoot } from "./fs/paths.js";
+import {
+  resolveExplicitProjectRoot,
+  resolveProjectRoot,
+} from "./fs/paths.js";
 
 const program = new Command();
 
@@ -29,7 +32,10 @@ program
         interactive: !opts.agent?.length,
       });
 
-      const projectRoot = resolveProjectRoot(opts.cwd ?? process.cwd());
+      const projectRoot =
+        opts.cwd !== undefined
+          ? resolveExplicitProjectRoot(opts.cwd)
+          : resolveProjectRoot(process.cwd());
       console.log(formatCreateResult(result, projectRoot));
     } catch (err) {
       console.error((err as Error).message);

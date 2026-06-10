@@ -4,6 +4,7 @@ import { ensureDir } from "./fs/mkdir.js";
 import {
   getCanonicalSkillPath,
   getProviderSkillPath,
+  resolveExplicitProjectRoot,
   resolveProjectRoot,
 } from "./fs/paths.js";
 import { createRelativeSymlink, type SymlinkResult } from "./fs/symlink.js";
@@ -57,8 +58,10 @@ export async function createSkill(
 ): Promise<CreateSkillResult> {
   validateSkillName(options.skillName);
 
-  const cwd = options.cwd ?? process.cwd();
-  const projectRoot = resolveProjectRoot(cwd);
+  const projectRoot =
+    options.cwd !== undefined
+      ? resolveExplicitProjectRoot(options.cwd)
+      : resolveProjectRoot(process.cwd());
   const canonicalPath = getCanonicalSkillPath(projectRoot, options.skillName);
   const skillMdPath = path.join(canonicalPath, "SKILL.md");
 
